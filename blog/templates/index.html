@@ -13,11 +13,12 @@
                 <label>{{ user }}</label>
             </div>
             <div class="login-label">
-                <label class="control-label" for="user_pwd">其他信息：</label>
-                <label>其他信息</label>
+                <label class="control-label" for="user_pwd">上次登录时间：</label>
+                <label>{{ user.last_login}}</label>
             </div>
             <div class="login-label">
-                <p id="message"></p>
+                <label class="control-label" for="user_pwd">注册时间：</label>
+                <label>{{ user.date_joined}}</label>
             </div>
             <div class="login-label">
                 <button type="button" class="btn" id="userlogout">注销</button>

@@ -1,0 +1,20 @@
+{% extends "blogs.html" %}
+{% load static %}
+{% block title %}博客|详情{% endblock %}
+{% block refrence %}<link href="{% static "/css/blog.css" %}" rel="stylesheet">{% endblock %}
+{% block blog_content %}
+<div class="blog">
+	<div class="extra_wrapper">
+		<div class="text1 col1"><center class="blog-title">{{ blog.blog_title }}</center></div>
+		<p>由 {{ blog.blog_author }} 发表，更新于：{{ blog.blog_modify_time }}</p>
+	</div>
+	<div class="clear"></div>
+	<div class="bg-img">
+	<img src={{ blog.blog_images.url }} alt="哈哈哈">
+	</div>
+	<div class="article-content">
+	<p>{{ blog.blog_content }}
+		<br>
+	</div>
+</div>
+{% endblock %}

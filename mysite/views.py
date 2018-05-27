@@ -1,7 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.views import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .forms import LoginForms
 
@@ -19,9 +18,6 @@ def tours(request):
 
 def hots(request):
     return render(request,"hots.html")
-
-def blogs(request):
-    return render(request,"blogs.html")
 
 def contacts(request):
     return render(request,"contacts.html")

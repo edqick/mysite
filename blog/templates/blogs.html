@@ -1,57 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}博客{% endblock %}
+{% block title %}博客|热门{% endblock %}
 {% block content %}{% endblock %}
 {% block body %}
 		<div class="content">
 			<div class="container_12">
 				<div class="grid_7">
-					<h3>欢迎您：{{ user }}</h3>
+					<h3>{% if user.is_authenticated %}欢迎您：{{ user }}{% else %}您尚未登录，<a href="/home/">点此登录</a>{% endif %}</h3>
+                    {% block blog_content %}{% for blog in blogs %}
 					<div class="blog">
-						<time datetime="2014-10-01">15<span>Feb</span></time>
+						<time>{{ blog.blog_create_time|date:"d" }}<span>{{ blog.blog_create_time|date:"D" }}</span></time>
 						<div class="extra_wrapper">
-							<div class="text1 col1"><a href="#">uamnibh Edet Mertolo numi</a></div>Posted by
-							<a href="#">Admin</a>
+							<div class="text1 col1"><a href="#">{{ blog.blog_title }}</a></div>
+							由<a href="#">{{ blog.blog_author }}</a>发表，更新于：{{ blog.blog_modify_time }}
 						</div>
 						<div class="clear"></div>
-						<img src="{% static "images/page4_img1.jpg" %}" alt="" class="img_inner">
-						<p>Cras facilisis, nulla vel viverra auctor, leo gna sodales felis, quis malesuada nibh odio ut velit. Proin pharetra luctus diam, a celerisque eros convallis accumsan. </p>Maecenas vehicula egestas venenatis. Duis massa elit, auctor non pellentesque vel aliquet sit amet erat. Nullam eget dignissim nisi, aliquam feugiat nibh.
+						<img src={{ blog.blog_images.url }} alt="" class="img_inner">
+						<p>{{ blog.blog_content }}
 						<br>
-						<a href="#" class="link1">LEARN MORE</a>
+						<a href="#" class="link1">了解更多</a>
 					</div>
-					<div class="blog">
-						<time datetime="2014-10-01">17<span>Feb</span></time>
-						<div class="extra_wrapper">
-							<div class="text1 col1"><a href="#">ERh EMertlo numolo</a></div>Posted by
-							<a href="#">Admin</a>
-						</div>
-						<div class="clear"></div>
-						<img src="{% static "images/page4_img2.jpg" %}" alt="" class="img_inner">
-						<p>Cras facilisis, nulla vel viverra auctor, leo gna sodales felis, quis malesuada nibh odio ut velit. Proin pharetra luctus diam, a celerisque eros convallis accumsan. </p>Maecenas vehicula egestas venenatis. Duis massa elit, auctor non pellentesque vel aliquet sit amet erat. Nullam eget dignissim nisi, aliquam feugiat nibh.
-						<br>
-						<a href="#" class="link1">LEARN MORE</a>
-					</div>
+					{% empty %}
+					<p>暂无文章</p>
+					{% endfor %}{% endblock %}
 				</div>
 				<div class="grid_3 prefix_1">
-					<h3 class="head1">CATEGORIES</h3>
+					<h3 class="head1">热门文章</h3>
 					<ul class="list">
-						<li><a href="#">Suspendisse massa mi </a></li>
-						<li><a href="#">Porttitor at velit id </a></li>
-						<li><a href="#">Congue adipiscing </a></li>
-						<li><a href="#">Vestibulum vitae porta </a></li>
-						<li><a href="#">Vivamus ac sodales </a></li>
-						<li><a href="#">Massa quis adipiscing </a></li>
-						<li><a href="#">Phasellus hendrerit </a></li>
-						<li><a href="#">Libero in sapien </a></li>
-						<li><a href="#">Dignissim vel imperdiet </a></li>
+						{% for blog in hot_blogs %}
+						<li><a href={% url 'blogs:blogdetails' blog.id %}>{{ blog.blog_title }}</a></li>
+						{% empty %}
+						<li>暂无热门</li>
+						{% endfor%}
 					</ul>
-					<h3 class="head1">ARchives</h3>
+					<h3 class="head1">文章分类</h3>
 					<ul class="list">
-						<li><a href="#">November 2013</a></li>
-						<li><a href="#">October 2013</a></li>
-						<li><a href="#">September 2013</a></li>
-						<li><a href="#">August 2013</a></li>
-						<li><a href="#">July 2013</a></li>
+						{% for type in type_blogs%}
+						<li><a href={% url 'blogs:blogtypes' type.id %}>{{ type }}</a></li>
+						{% empty %}
+						<li>暂无分类</li>
+						{% endfor %}
 					</ul>
 				</div>
 			</div>

@@ -1,0 +1,16 @@
+{% extends "blogs.html" %}
+{% load static %}
+{% block title %}博客|分类{% endblock %}
+{% block refrence %}{% endblock %}
+{% block blog_content %}
+<div class="types-list">
+	<h3 class="head1">{{ assgin_types.type_name }}</h3>
+	<ul class="list">
+		{% for blog in assgin_type_blogs %}
+		<li><a href={% url 'blogs:blogdetails' blog.id %}>{{ blog.blog_title }}</a></li>
+		{% empty %}
+		<li>该分类下暂无博客</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
