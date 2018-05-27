@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}首页{% endblock %}
+{% block refrence %}<link href="{% static "/css/form.css" %}" rel="stylesheet">{% endblock %}
+{% block content %}
+<div class="forms-login">
+    <div class="forms-content">
+        <form class="form-login">
+        <center class="form-bg">
+            <h3 class="login-title">登录</h3>
+            <div class="login-label">
+                <label class="control-label" for="user_name">账号：</label>
+                <input type="text" id="user_name" placeholder="请输入用户名" required="required">
+            </div>
+            <div class="login-label">
+                <label class="control-label" for="user_pwd">密码：</label>
+                <input type="password" id="user_pwd" placeholder="请输入密码" required="required">
+            </div>
+            <div class="login-label">
+                <button type="submit" class="btn" id="login">登录</button>
+                <button type="reset" class="btn">重置</button>
+            </div>
+            </center>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $("#login").click(function(){
+        alert("click login button")
+            var username = $("#user_name").val();
+            var password = $("#user_pwd").val();
+            alert(username)
+            alert(password)
+            $.post("/login/",{"username":username,"password":password},function(ret){
+            alert(ret)
+                if(ret!="success"){
+                    alert("失败");
+                    $("#tips").html("账号或密码错误")
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}

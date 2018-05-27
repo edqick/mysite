@@ -1,0 +1,47 @@
+div.head-content{
+    padding-top: 200px;
+}
+div.row-fluid{
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 80px;
+}
+.form-login{
+        height: 200px;
+    padding-left: 280px;
+    padding-right: 280px;
+}
+.form-bg{
+    background-color: white;
+    opacity: 0.65;
+    border-radius: 25px;
+}
+div.login-label{
+    padding-bottom: 30px;
+}
+.login-title{
+    padding-bottom: 30px;
+}
+.btn{
+    background-color: darkgray;
+}
+div.control-group{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+div.controls{
+    padding-left: 110px;
+}
+div.span12{
+    padding-top: 0px;
+}
+form.form-horizontal{
+    padding-top: 120px;
+}
+label.control-label{
+    padding-right: 20px;
+}
+label.checkbox{
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
