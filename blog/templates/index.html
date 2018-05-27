@@ -3,90 +3,74 @@
 {% block title %}首页{% endblock %}
 {% block refrence %}<link href="{% static "/css/form.css" %}" rel="stylesheet">{% endblock %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row-fluid">
-            <div class="span12">
-                    <form class="form-horizontal">
-                        <div class="form-login" id="form-login">
-                            {% if user.is_authenticated %}<!--已登录-->
-                                <center><h3>您已登陆</h3></center>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="control-label" for="inputEmail" id="label-email">用户名:</label>
-                                    <label class="control-label">{{ user }}</label>
-                                </div>
-				            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="control-label" for="inputPassword" id="label-info">其他信息:</label>
-                                    <label class="control-label">其他信息</label>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                  <button type="submit" class="btn" id="logout">注销用户</button>
-                                </div>
-				            </div>
-                                {% else %}<!--未登录-->
-                            <center><h3>登陆</h3></center>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="control-label" for="inputEmail" id="label-user">账号:</label>
-                                    <input id="inputEmail" type="text" />
-                                </div>
-				            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="control-label" for="inputPassword" id="label-pwd">密码:</label>
-                                    <input id="inputPassword" type="password" />
-                                </div>
-                            </div>
-                            <p id="tips"></p>
-                            <div class="control-group">
-                                <div class="controls">
-                                  <label class="checkbox"><input type="checkbox" /> 记住我</label>
-                                    <button type="button" class="btn" id="register">注册</button>
-                                    <button type="submit" class="btn" id="login">登录</button>
-                                </div>
-				            </div>
-                {% endif %}
-                        </div>
-			</form>
-		</div>
-	</div>
+<div class="forms-login">
+    <div class="forms-content">
+        <form class="form-login">
+        <center class="form-bg">{% if user.is_authenticated %}
+            <h3 class="login-title">已登录</h3>
+            <div class="login-label">
+                <label class="control-label">用户名：</label>
+                <label>{{ user }}</label>
+            </div>
+            <div class="login-label">
+                <label class="control-label" for="user_pwd">其他信息：</label>
+                <label>其他信息</label>
+            </div>
+            <div class="login-label">
+                <p id="message"></p>
+            </div>
+            <div class="login-label">
+                <button type="button" class="btn" id="userlogout">注销</button>
+            </div>
+            {% else %}
+            <h3 class="login-title">登录</h3>
+            <div class="login-label">
+                <label class="control-label" for="user_name">账号：</label>
+                <input type="text" id="user_name" placeholder="请输入用户名" required="required">
+            </div>
+            <div class="login-label">
+                <label class="control-label" for="user_pwd">密码：</label>
+                <input type="password" id="user_pwd" placeholder="请输入密码" required="required">
+            </div>
+            <div class="login-label">
+                <p id="message"></p>
+            </div>
+            <div class="login-label">
+                <button type="button" class="btn" id="userlogin">登录</button>
+                <button type="reset" class="btn">重置</button>
+            </div>
+            {% endif %}</center>
+        </form>
+    </div>
 </div>
-          </div>
 {% endblock %}
 {% block script %}
-<script>
-{% if user.is_authenticated %}
+<script>{% if user.is_authenticated %}
     $(document).ready(function(){
-        $("#logout").click(function(){
-            $.get("/logout/",function(ret){
-                if(ret=="success"){
+        $("#userlogout").click(function(){
+            $.get("/logout/",function(data){
+                if(data=="success"){
                     alert("注销成功");
-                    window.location="/blogs/";
+                    window.location = "/blogs/";
                 }else{
-                    alert("注销失败");
+                    alert("注销失败")
                 }
-            })
-        })
-    })
-{% else %}
+            });
+        });
+    }){% else %}
     $(document).ready(function(){
-        $("#login").click(function(){
-        alert("click login button")
-            var username = $("#inputEmail").val();
-            var password = $("#inputPassword").val();
-            $.post("/login/",{"username":username,"password":password},function(ret){
-            alert(ret)
-                if(ret!="success"){
-                    alert("失败");
-                    $("#tips").html("账号或密码错误")
-                }
-            })
-        })
-    })
-{% endif %}
+        $("#userlogin").click(function(){
+            var user = $("#user_name").val();
+            var pwd= $("#user_pwd").val();
+            $.post("/login/", { "username": user,"password":pwd },
+               function(data){
+                 if(data=="success"){//验证成功
+                    window.location = "/home/"
+                 }else{
+                    $("#message").html("账号或密码错误，请重试！")
+                 }
+               });
+        });
+    }){% endif %}
 </script>
 {% endblock %}
